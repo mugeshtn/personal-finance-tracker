@@ -23,19 +23,19 @@ export function Navbar() {
           }`}>Dashboard</Link>
         <Link href="/user/transactions" className={`hover:bg-gray-700 px-3 py-1 rounded ${isActive("/user/transactions") ? "bg-gray-800 text-white" : ""
           }`}>Transactions</Link>
-        <Link href="#" className={`hover:bg-gray-700 px-3 py-1 rounded ${isActive("/user/dashboard") ? "bg-gray-800 text-white" : ""
-          }`}>Budget</Link>
+        <Link href="/user/budget" className={`hover:bg-gray-700 px-3 py-1 rounded ${isActive("/user/budget") ? "bg-gray-800 text-white" : ""
+          }`}>Budgets</Link>
       </div>
 
-      <button onClick={() => setIsOpen(!isOpen)} className="md:hidden">
+      <button onClick={() => setIsOpen(!isOpen)} className="sm:hidden">
         {isOpen ? <X size={28} /> : <Menu size={28} />}
       </button>
 
       {isOpen && (
-        <div className="absolute top-14 right-4 bg-gray-800 text-white p-4 rounded-md shadow-md flex flex-col space-y-2 md:hidden">
-          <Link href="#" className="hover:bg-gray-700 p-2 rounded">Dashboard</Link>
-          <Link href="#" className="hover:bg-gray-700 p-2 rounded">Transactions</Link>
-          <Link href="#" className="hover:bg-gray-700 p-2 rounded">Budget</Link>
+        <div className="absolute top-14 right-4 bg-gray-800 text-white p-4 rounded-md shadow-md flex flex-col space-y-2 sm:hidden">
+          <Link href="/user/dashboard" className="hover:bg-gray-700 p-2 rounded">Dashboard</Link>
+          <Link href="/user/transactions" className="hover:bg-gray-700 p-2 rounded">Transactions</Link>
+          <Link href="/user/budget" className="hover:bg-gray-700 p-2 rounded">Budget</Link>
         </div>
       )}
     </nav>

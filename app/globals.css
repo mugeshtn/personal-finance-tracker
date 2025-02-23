@@ -2,6 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+.text_gradient {
+  @apply bg-gradient-to-r from-[#8338ec] to-[#ff006e] text-transparent bg-clip-text overflow-visible;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 
 @layer base {
   :root {

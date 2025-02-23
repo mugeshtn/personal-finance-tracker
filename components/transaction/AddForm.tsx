@@ -9,16 +9,18 @@ import { Dispatch, SetStateAction } from "react";
 import { transactionSchema } from "@/utils/types";
 import axios from 'axios';
 import { showToast } from "@/utils/showToast";
+import { dashboardCategories } from "@/utils/constants";
 
-const Addform = ({setOpen, setRefresh}: {setOpen: Dispatch<SetStateAction<boolean>>, setRefresh: Dispatch<SetStateAction<boolean>>}) => {
+
+const Addform = ({ setOpen, setRefresh }: { setOpen: Dispatch<SetStateAction<boolean>>, setRefresh: Dispatch<SetStateAction<boolean>> }) => {
     const form = useForm({
         resolver: zodResolver(transactionSchema),
-        defaultValues: { date: "", paymentMethod: "Cash", amount: "", notes: "" },
+        defaultValues: { date: "", paymentMethod: "Cash", amount: "", notes: "", category: "others"},
     });
 
     const onSubmit = async (data: any) => {
         try {
-             await axios.post("/api/transactions", data, {
+            await axios.post("/api/transactions", data, {
                 headers: { "Content-Type": "application/json" },
             });
             showToast("Transaction saved successfully!", "success")
@@ -33,7 +35,7 @@ const Addform = ({setOpen, setRefresh}: {setOpen: Dispatch<SetStateAction<boolea
     return (
         <div className="flex rounded-xl"  >
             <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 max-w-md mx-auto border p-4 shadow-md max-h-[400px] min-w-[300px]">
+                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4 max-w-md mx-auto border p-4 shadow-md min-w-[300px]">
                     <FormField
                         control={form.control}
                         name="date"
@@ -50,18 +52,21 @@ const Addform = ({setOpen, setRefresh}: {setOpen: Dispatch<SetStateAction<boolea
 
                     <FormField
                         control={form.control}
-                        name="paymentMethod"
+                        name="category"
                         render={({ field }) => (
                             <FormItem>
-                                <FormLabel>Select Payment Method</FormLabel>
+                                <FormLabel>Category</FormLabel>
                                 <FormControl>
                                     <Select onValueChange={field.onChange} defaultValue={field.value}>
                                         <SelectTrigger>
-                                            <SelectValue placeholder="Select an option" />
+                                            <SelectValue placeholder="Select category" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            <SelectItem value="Cash">Cash</SelectItem>
-                                            <SelectItem value="Account">Account</SelectItem>
+                                            {dashboardCategories.map((category, index) => (
+                                                <SelectItem key={index} value={category}>
+                                                    {category}
+                                                </SelectItem>
+                                            ))}
                                         </SelectContent>
                                     </Select>
                                 </FormControl>
@@ -91,6 +96,28 @@ const Addform = ({setOpen, setRefresh}: {setOpen: Dispatch<SetStateAction<boolea
                             </FormItem>
                         )}
                     />
+                    <FormField
+                        control={form.control}
+                        name="paymentMethod"
+                        render={({ field }) => (
+                            <FormItem>
+                                <FormLabel>Select Payment Method</FormLabel>
+                                <FormControl>
+                                    <Select onValueChange={field.onChange} defaultValue={field.value}>
+                                        <SelectTrigger>
+                                            <SelectValue placeholder="Select an option" />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            <SelectItem value="Cash">Cash</SelectItem>
+                                            <SelectItem value="Account">Account</SelectItem>
+                                        </SelectContent>
+                                    </Select>
+                                </FormControl>
+                                <FormMessage />
+                            </FormItem>
+                        )}
+                    />
+
 
                     <FormField
                         control={form.control}
