@@ -22,3 +22,21 @@ export const formatDateTime = (dateString: string) => {
     return [formattedDate, formattedTime];
 };
 
+export const incomeDateTime = (dateString: string) => {
+    const date = new Date(dateString);
+
+    const formattedDate = date.toLocaleDateString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+    }).replace(/\//g, "-");
+
+    const weekday = date.toLocaleDateString("en-IN", {
+        timeZone: "Asia/Kolkata",
+        weekday: "short",
+    })
+    return `${formattedDate} (${weekday})`;
+};
+
+export const todayInputFormat = new Date().toISOString().split("T")[0];

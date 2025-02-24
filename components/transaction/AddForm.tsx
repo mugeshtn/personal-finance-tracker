@@ -9,13 +9,14 @@ import { Dispatch, SetStateAction } from "react";
 import { transactionSchema } from "@/utils/types";
 import axios from 'axios';
 import { showToast } from "@/utils/showToast";
-import { dashboardCategories } from "@/utils/constants";
+import { Categories } from "@/utils/constants";
+import { todayInputFormat } from "@/utils/utilFunctions";
 
 
 const Addform = ({ setOpen, setRefresh }: { setOpen: Dispatch<SetStateAction<boolean>>, setRefresh: Dispatch<SetStateAction<boolean>> }) => {
     const form = useForm({
         resolver: zodResolver(transactionSchema),
-        defaultValues: { date: "", paymentMethod: "Cash", amount: "", notes: "", category: "others"},
+        defaultValues: { date: todayInputFormat, paymentMethod: "Cash", amount: "", notes: "", category: "others"},
     });
 
     const onSubmit = async (data: any) => {
@@ -43,7 +44,7 @@ const Addform = ({ setOpen, setRefresh }: { setOpen: Dispatch<SetStateAction<boo
                             <FormItem>
                                 <FormLabel>Date</FormLabel>
                                 <FormControl>
-                                    <Input {...field} type="datetime-local" />
+                                    <Input {...field} type="date" />
                                 </FormControl>
                                 <FormMessage />
                             </FormItem>
@@ -62,7 +63,7 @@ const Addform = ({ setOpen, setRefresh }: { setOpen: Dispatch<SetStateAction<boo
                                             <SelectValue placeholder="Select category" />
                                         </SelectTrigger>
                                         <SelectContent>
-                                            {dashboardCategories.map((category, index) => (
+                                            {Categories.map((category, index) => (
                                                 <SelectItem key={index} value={category}>
                                                     {category}
                                                 </SelectItem>

@@ -7,8 +7,8 @@ export default function Footer() {
         <footer className="bg-gray-900 text-white py-2 px-6 md:px-16">
             <div className="container mx-auto flex flex-col md:flex-row items-center justify-between gap-6">
                 <div className="text-center md:text-left">
-                    <h2 className="text-2xl font-pacifico">Fintrack</h2>
-                    <p className="text-sm text-gray-400 font-poppins">Smart budgeting & expense tracking</p>
+                    <h2 className="text-2xl font-pacifico mt-4">FinTrack</h2>
+                    <p className="text-sm text-gray-400 ">Smart budgeting & expense tracking</p>
                 </div>
 
                 <div className="flex flex-wrap justify-center gap-4 text-gray-300">

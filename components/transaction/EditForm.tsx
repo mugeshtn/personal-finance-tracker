@@ -6,7 +6,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Dispatch, SetStateAction } from "react";
 import { MongoTransactionDatas } from "@/utils/types";
 import { handleEdit } from "@/app/user/transactions/handleApi";
-import { dashboardCategories } from "@/utils/constants";
+import { Categories } from "@/utils/constants";
 
 interface EditFormProps {
   editedData: MongoTransactionDatas,
@@ -24,22 +24,13 @@ const EditForm = ({ editedData, setEditedData, setClose, setRefresh }: EditFormP
       </CardHeader>
       <CardContent className="space-y-4">
         <div>
-          <Label>Date</Label>
+          <Label>Amount</Label>
           <Input
-            type="datetime-local"
-            value={editedData.date}
-            onChange={(e) => setEditedData({ ...editedData, date: e.target.value })}
+            type="number"
+            value={editedData.amount}
+            onChange={(e) => setEditedData({ ...editedData, amount: e.target.value })}
           />
         </div>
-        <div>
-          <Label>Notes</Label>
-          <Input
-            type="text"
-            value={editedData.notes}
-            onChange={(e) => setEditedData({ ...editedData, notes: e.target.value })}
-          />
-        </div>
-
         <div>
           <Label>Category</Label>
           <Select
@@ -50,13 +41,21 @@ const EditForm = ({ editedData, setEditedData, setClose, setRefresh }: EditFormP
               <SelectValue placeholder="Select category" />
             </SelectTrigger>
             <SelectContent>
-              {dashboardCategories.map((cat) => (
+              {Categories.map((cat) => (
                 <SelectItem key={cat} value={cat}>
                   {cat}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
+        </div>
+        <div>
+          <Label>Notes</Label>
+          <Input
+            type="text"
+            value={editedData.notes}
+            onChange={(e) => setEditedData({ ...editedData, notes: e.target.value })}
+          />
         </div>
 
         <div>
@@ -74,14 +73,7 @@ const EditForm = ({ editedData, setEditedData, setClose, setRefresh }: EditFormP
             </SelectContent>
           </Select>
         </div>
-        <div>
-          <Label>Amount</Label>
-          <Input
-            type="number"
-            value={editedData.amount}
-            onChange={(e) => setEditedData({ ...editedData, amount: e.target.value })}
-          />
-        </div>
+
 
         <div className="flex justify-between">
           <Button onClick={() => handleEdit(editedData, setRefresh, setClose)} className="bg-green-600">

@@ -13,10 +13,10 @@ export function Navbar() {
   const isActive = (route: string) => pathname === route;
 
   return (
-    <nav className="flex items-center justify-around sm:justify-start sm:gap-4 p-4 bg-gray-900 text-white">
+    <nav className="flex sticky top-0 z-30 items-center justify-around sm:justify-start sm:gap-4 p-4 bg-gray-900 text-white">
       <div className="flex gap-2 sm:mx-5  items-center">
         <Image alt="brand-icon" src="/icons/brand_icon.png" width={32} height={32} />
-        <div className="text-xl font-bold"><Link href="/">FinTrack</Link></div>
+        <div className="text-xl font-pacifico"><Link href="/">FinTrack</Link></div>
       </div>
       <div className="hidden sm:flex items-center">
         <Link href="/user/dashboard" className={`hover:bg-gray-700 px-3 py-1 rounded ${isActive("/user/dashboard") ? "bg-gray-800 text-white" : ""

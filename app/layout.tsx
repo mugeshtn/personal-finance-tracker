@@ -13,6 +13,7 @@ pacifico;
 export const metadata: Metadata = {
   title: "FinTrack",
   description: "Track your expenses and budgets",
+  icons: "/icons/brand_icon.png"
 };
 
 export default function RootLayout({

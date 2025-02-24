@@ -7,7 +7,13 @@ export async function GET() {
     try {
         await connectDB();
         const transactions = await Transaction.find({});
-        return NextResponse.json(transactions, { status: 200 });
+        const categoryExpenses = await Transaction.aggregate([
+            { $group: { _id: "$category", total: { $sum: "$amount" } } },
+            {
+                $project: { _id: 0, category: "$_id", total: 1 }
+            }
+        ])
+        return NextResponse.json({ transactions, categoryExpenses: categoryExpenses.length > 0 ? categoryExpenses : [] }, { status: 200 });
     } catch (error) {
         console.error("Transaction API Error:", error);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });

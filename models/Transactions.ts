@@ -21,7 +21,7 @@ const TransactionSchema = new Schema({
         type: String,
         enum: ["Food & Drinks", "Transport", "Entertainment", "Bills", "Shopping", "Education", "Health & fitness" , "Investment", "others"],
         required: true
-    }
+    },
 }, {timestamps: true})
 
 
