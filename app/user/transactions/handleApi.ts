@@ -16,7 +16,7 @@ export const handleDelete = async (id: string, setRefresh: Dispatch<SetStateActi
 
 export const handleEdit = async (data: MongoTransactionDatas, setRefresh: Dispatch<SetStateAction<boolean>>, setClose: Dispatch<SetStateAction<boolean>>
 ) => {
-    console.log(data._id)
+
     try {
         await axios.put(`/api/transactions/${data._id}`, data, {
             headers: { "Content-Type": "application/json" },
