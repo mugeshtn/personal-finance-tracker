@@ -26,9 +26,16 @@ const EditForm = ({ editedData, setEditedData, setClose, setRefresh }: EditFormP
         <div>
           <Label>Amount</Label>
           <Input
-            type="number"
+            type="text" 
             value={editedData.amount}
-            onChange={(e) => setEditedData({ ...editedData, amount: e.target.value })}
+            onChange={(e) => {
+              let value = e.target.value;
+              value = value.replace(/^0+(?=\d)/, "");
+              
+              if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
+                setEditedData({ ...editedData, amount: value });
+              }
+            }}
           />
         </div>
         <div>

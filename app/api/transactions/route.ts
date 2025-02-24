@@ -9,13 +9,11 @@ export async function GET() {
         const transactions = await Transaction.find({});
         const categoryExpenses = await Transaction.aggregate([
             { $group: { _id: "$category", total: { $sum: "$amount" } } },
-            {
-                $project: { _id: 0, category: "$_id", total: 1 }
-            }
+            { $project: { _id: 1, category: "$_id", total: 1 } }
         ])
         return NextResponse.json({ transactions, categoryExpenses: categoryExpenses.length > 0 ? categoryExpenses : [] }, { status: 200 });
-    } catch (error) {
-        console.error("Transaction API Error:", error);
+    } catch (error: any) {
+        console.error("Transaction API Error:", error.message);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }
@@ -32,8 +30,8 @@ export async function POST(req: Request) {
 
         const newTransaction = await Transaction.create(parsedData.data);
         return NextResponse.json(newTransaction, { status: 201 });
-    } catch (error) {
-        console.error("Transaction API Error:", error);
+    } catch (error: any) {
+        console.error("Transaction API Error:", error.message);
         return NextResponse.json({ error: "Internal Server Error" }, { status: 500 });
     }
 }

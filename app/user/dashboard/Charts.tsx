@@ -8,7 +8,7 @@ type formattedData = {
 }
 
 export const DailyBarChart = () => {
-  const { transactions } = useTransactions();
+  const { transactions = [] } = useTransactions();
 
   const formattedData: formattedData[] = transactions.reduce((acc: formattedData[], tx: MongoTransactionDatas) => {
     const date = new Date(tx.date).toLocaleString("en-IN", {
@@ -27,50 +27,110 @@ export const DailyBarChart = () => {
     return acc;
   }, []);
   return (
-    <div className="w-full md:w-[690px] px-5 py-5 bg-gray-100 rounded-2xl shadow-2xl p-4">
+    <div className="w-full  px-5 py-5 bg-gray-100 rounded-2xl shadow-2xl ">
       <h1 className="text-xl font-semibold mb-4 ml-8">Monthly Transaction</h1>
-      <ResponsiveContainer width="100%" height={300}>
-        <BarChart data={formattedData} margin={{ top: 30, right: 30, bottom: 20, left: 0 }} barCategoryGap={5}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" fontSize={10} />
-          <YAxis fontSize={10} domain={[0, "dataMax + 500"]} allowDataOverflow />
-          <Tooltip />
-          <Bar dataKey="amount" fill="#8884d8" barSize={30} />
-        </BarChart>
-      </ResponsiveContainer>
+      {
+        transactions.length > 0 ? (
+          <ResponsiveContainer width="100%" height={300}>
+            <BarChart data={formattedData} margin={{ top: 30, right: 30, bottom: 20, left: 0 }} barCategoryGap={5}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="date" fontSize={10} />
+              <YAxis fontSize={10} domain={[0, "dataMax + 500"]} allowDataOverflow />
+              <Tooltip />
+              <Bar dataKey="amount" fill="#8884d8" barSize={30} />
+            </BarChart>
+          </ResponsiveContainer>
+        ) : (
+          <div>No Transaction data available!</div>
+        )
+      }
     </div>
   );
 };
 
-const budgetData = [
-  { category: "Food & Drinks", amount: 5000 },
-  { category: "Transport", amount: 2000 },
-  { category: "Entertainment", amount: 3000 },
-  { category: "Shopping", amount: 4000 },
-  { category: "Health & Fitness", amount: 2500 },
-  { category: "Others", amount: 1500 },
-];
+
+// CATEGORY WISE PIE CHART
 
 const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28DFF", "#FF6384"];
 
-
 export const CategoryPieChart = () => {
-  const { category } = useTransactions();
+  const { category = [] } = useTransactions();
   return (
     <div className="w-full md:w-[400px] md:ml-10 bg-gray-100 md:px-5 shadow-2xl rounded-xl p-4">
       <h1 className="text-xl font-semibold ml-8">Categories</h1>
-      <ResponsiveContainer className="bg-gray-100  rounded-2xl py-8" width="100%" height={320}>
-        <PieChart >
-          <Pie data={category} dataKey="total" nameKey="category" cx="50%" cy="50%" innerRadius={70} outerRadius={90} fill="#8884d8" label>
-            {budgetData.map((_, index) => (
-              <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
-            ))}
-          </Pie>
-          <Tooltip />
-          <Legend wrapperStyle={{ fontSize: "11px" }} />
-        </PieChart>
-      </ResponsiveContainer>
+      {category.length > 0 ? (
+        <ResponsiveContainer className="bg-gray-100 rounded-2xl py-8" width="100%" height={320}>
+          <PieChart>
+            <Pie
+              data={category}
+              dataKey="total"
+              nameKey="category"
+              cx="50%"
+              cy="50%"
+              innerRadius={70}
+              outerRadius={90}
+              fill="#8884d8"
+              label
+            >
+              {category.map((_, index) => (
+                <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+              ))}
+            </Pie>
+            <Tooltip />
+            <Legend wrapperStyle={{ fontSize: "11px" }} />
+          </PieChart>
+        </ResponsiveContainer>
+      ) : (
+        <div className="text-center text-gray-500 py-8">No Categories Available</div>
+      )}
     </div>
   );
 }
 
+
+
+
+// BUDGET VS ACTUAL BAR CHART
+const customBarRender = (props: any, payload: any) => {
+  const { x, y, width, height } = props;
+  const barColor = payload.category.total > payload.total ? "red" : "#82ca9d"; // Red if expenses > budget
+
+  return (
+    <rect x={x} y={y} width={width} height={height} fill={barColor} />
+  );
+};
+export const ComparisonBarChart = () => {
+  const { filteredBudgets=[] } = useTransactions();
+
+  console.log(filteredBudgets)
+
+  return (
+    <>
+      <div className="w-full md:w-[690px] px-5 py-5 bg-gray-100 rounded-2xl shadow-2xl p-4">
+        <h1 className="text-xl font-semibold ml-0 md:ml-10 pb-3 text-center md:text-left">Budget vs Actual Comparison</h1>
+        {
+          filteredBudgets.length > 0 ? (
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={filteredBudgets}>
+                <CartesianGrid strokeDasharray="3 3" />
+                <XAxis fontSize={10} dataKey="category.category" />
+                <YAxis fontSize={10} domain={[0, "dataMax + 500"]} allowDataOverflow />
+                <Tooltip />
+                <Legend wrapperStyle={{ fontSize: "11px" }} />
+                <Bar dataKey="total" fill="#8884d8" name="Budget"/>
+                <Bar
+                name="Expenses"
+                  dataKey="category.total"
+                  shape={(props: any) => customBarRender(props, props.payload)}
+                />
+              </BarChart>
+            </ResponsiveContainer>
+          ) : (
+            <div className="text-center text-gray-500 py-8">No comparison data Available</div>
+          )
+        }
+      </div>
+
+    </>
+  )
+}

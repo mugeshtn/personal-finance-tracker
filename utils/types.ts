@@ -2,13 +2,13 @@ import { z } from "zod";
 
 export const transactionSchema = z.object({
     date: z.string().min(1, "Date is required"),
-    category: z.enum(["Food & Drinks", "Transport", "Entertainment", "Bills", "Shopping", "Education", "Health & fitness" , "Investment", "others"]),
+    category: z.enum(["Food & Drinks", "Transport", "Entertainment", "Bills", "Shopping", "Education", "Health & fitness", "Investment", "others"]),
     amount: z.string().min(1, "Amount is greater than zero"),
     paymentMethod: z.enum(["Cash", "Account"], { message: "Select a valid option" }),
     notes: z.string().optional()
 });
 export type TransactionDatas = z.infer<typeof transactionSchema>[];
-export type MongoTransactionDatas = (z.infer<typeof transactionSchema> & {_id: string});
+export type MongoTransactionDatas = (z.infer<typeof transactionSchema> & { _id: string });
 
 //----------------------------------------------------
 
@@ -19,22 +19,22 @@ export const incomeSchema = z.object({
 })
 
 export type TIncomeDatas = z.infer<typeof incomeSchema>
-export type MongoIncomeDatas = (z.infer<typeof incomeSchema> & {_id: string})
+export type MongoIncomeDatas = (z.infer<typeof incomeSchema> & { _id: string })
 
 //-----------------------------------------------------
 
 export const budgetSchema = z.object({
-    category: z.enum(["Food & Drinks", "Transport", "Entertainment", "Bills", "Shopping", "Education", "Health & fitness" , "Investment", "others"]),
+    category: z.enum(["Food & Drinks", "Transport", "Entertainment", "Bills", "Shopping", "Education", "Health & fitness", "Investment", "others"]),
     amount: z.string(),
-    date: z.string()
+    date: z.string().optional()
 })
 
 export type TBudgetDatas = z.infer<typeof budgetSchema>
-export type MongoBudgetDatas = (z.infer<typeof budgetSchema> & {_id: string})
+export type MongoBudgetDatas = (z.infer<typeof budgetSchema> & { _id: string })
 
 //-----------------------------------------------------
 
-export type TCategories = "Food & Drinks"| "Transport"| "Entertainment"| "Bills"| "Shopping"| "Education"| "Health & fitness" | "Investment"| "others"
+export type TCategories = "Food & Drinks" | "Transport" | "Entertainment" | "Bills" | "Shopping" | "Education" | "Health & fitness" | "Investment" | "others"
 
 export type TPayment = "All" | "Cash" | "Account"
 
@@ -45,3 +45,17 @@ export type TCardFeatures = {
 }
 
 export type TSource = "Salary" | "Business" | "Others";
+
+export const budgetEditSchma = z.object({
+    amount: z.string().optional(),
+    category: z.enum(["Food & Drinks", "Transport", "Entertainment", "Bills", "Shopping", "Education", "Health & fitness", "Investment", "others"]).optional(),
+});
+// ---------------------------------------------------------
+
+export interface IBudgetCategory {
+    category: {
+        total: number;
+        category: string;
+    };
+    total: number;
+}

@@ -8,8 +8,7 @@ import Footer from "@/components/home/Footer";
 
 const pacifico = Pacifico({ subsets: ["latin"], weight: "400" });
 const inter = Inter({ subsets: ["latin"], weight: "400" });
-inter;
-pacifico;
+
 export const metadata: Metadata = {
   title: "FinTrack",
   description: "Track your expenses and budgets",
@@ -23,7 +22,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <body className={`${inter.className} ${pacifico.className}`}>
         <div className="w-full h-80 bg-blue-950 text-white">
           <ToastContainer />
           <Navbar />

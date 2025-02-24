@@ -86,7 +86,10 @@ const Addform = ({ setOpen, setRefresh }: { setOpen: Dispatch<SetStateAction<boo
                                         inputMode="decimal"
                                         pattern="[0-9]+(\.[0-9]{1,2})?"
                                         onChange={(e) => {
-                                            const value = e.target.value;
+                                            let value = e.target.value;
+                                            if (/^0+\d/.test(value)) {
+                                                value = value.replace(/^0+/, "");
+                                            }
                                             if (/^\d*\.?\d*$/.test(value)) {
                                                 field.onChange(value);
                                             }

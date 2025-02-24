@@ -61,7 +61,10 @@ const AddIncome = ({ setShowIncForm }: { setShowIncForm: Dispatch<SetStateAction
                                             inputMode="decimal"
                                             pattern="^\d+(\.\d{1,2})?$"
                                             onChange={(e) => {
-                                                const value = e.target.value;
+                                                let value = e.target.value;
+                                                if (/^0+\d/.test(value)) {
+                                                    value = value.replace(/^0+/, "");
+                                                }
                                                 if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
                                                     field.onChange(value);
                                                 }
@@ -109,8 +112,9 @@ const AddIncome = ({ setShowIncForm }: { setShowIncForm: Dispatch<SetStateAction
                             )}
                         />
                     </CardContent>
-                    <CardFooter>
-                        <Button type="submit" className="w-full">Add Income</Button>
+                    <CardFooter className="flex justify-between">
+                        <Button type="submit" className="bg-blue-600">Save</Button>
+                        <Button type="submit" className="bg-red-600">Close</Button>
                     </CardFooter>
                 </form>
             </Form>

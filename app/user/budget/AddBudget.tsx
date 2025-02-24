@@ -57,7 +57,10 @@ const AddBudget = ({setShowBudgetForm}: {setShowBudgetForm: Dispatch<SetStateAct
                       inputMode="decimal"
                       pattern="^\d+(\.\d{1,2})?$"
                       onChange={(e) => {
-                        const value = e.target.value;
+                        let value = e.target.value;
+                        if (/^0+\d/.test(value)) {
+                          value = value.replace(/^0+/, "");
+                      }
                         if (/^\d*\.?\d{0,2}$/.test(value) || value === "") {
                           field.onChange(value);
                         }

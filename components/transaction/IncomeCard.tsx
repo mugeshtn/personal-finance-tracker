@@ -7,16 +7,42 @@ import { useEffect, useState } from "react";
 import AddBudget from "@/app/user/budget/AddBudget";
 
 const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
-    const { totalExpense, income, balance, getIncome } = useTransactions();
+    const { totalExpense, income, balance, getIncome, budgetAmt, getBudget, filteredBudgets = [] } = useTransactions();
 
     const [showIncForm, setShowIncForm] = useState(false);
     const [showBudgetForm, setShowBudgetForm] = useState(false);
 
+    const spendAmt = filteredBudgets.reduce((sum, val) => {
+       return sum + val.category.total;
+    }, 0)
+
+    const savingsAmt = budgetAmt - spendAmt;
+
     useEffect(() => {
         getIncome()
-    }, [showIncForm])
+        getBudget()
+    }, [showIncForm, showBudgetForm])
 
-    
+    const getCardValue = (name: string, amount: string) => {
+        switch (name) {
+            case "Total Expenses":
+                return totalExpense ?? amount;
+            case "Balance":
+                return balance ?? amount;
+            case "Total Income":
+                return income ?? amount;
+            case "Total Budget":
+                return budgetAmt ?? amount;
+            case "Savings":
+                return savingsAmt ?? amount;
+            case "Actual Spend":
+                return spendAmt ?? amount;
+
+            default:
+                return "---";
+        }
+    };
+
     return (
         <>
             {cardFeatures.map((card) => (
@@ -26,17 +52,14 @@ const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
                         {
                             card.name === "Total Expenses" || card.name === "Actual Spend" ? <TrendingDown className={card.color} /> :
                                 card.name === "Total Income" || card.name === "Total Budget" ? <Wallet className={card.color} /> :
-                                    card.name === "Balance" ||card.name === "Savings" ? <LucidePiggyBank className={card.color} /> :
+                                    card.name === "Balance" || card.name === "Savings" ? <LucidePiggyBank className={card.color} /> :
                                         card.name === "Total Budget" ? <Wallet className={card.color} /> : null
                         }
                     </CardHeader>
                     <CardContent className="relative">
                         <h1 className="font-bold text-medium sm:text-xl">
                             ₹ {
-                                card.name === "Total Expenses" ? totalExpense ?? card.amount :
-                                    card.name === "Balance" ? balance ?? card.amount :
-                                        card.name === "Total Income" ? income ?? card.amount :
-                                            "---"
+                                getCardValue(card.name, card.amount)
                             }
                         </h1>
                         {
@@ -54,7 +77,7 @@ const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
             ))}
 
             {showIncForm && (
-                <div className="absolute left-72 top-10 z-10 min-w-[300px]">
+                <div className="absolute lg:left-72 right-0 lg:top-10 z-10 min-w-[300px]">
                     <AddIncome setShowIncForm={setShowIncForm} />
                 </div>
             )}
