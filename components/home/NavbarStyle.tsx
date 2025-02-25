@@ -13,7 +13,7 @@ export function Navbar() {
   const isActive = (route: string) => pathname === route;
 
   return (
-    <nav className="flex sticky top-0 z-30 items-center justify-around sm:justify-start sm:gap-4 p-4 bg-gray-900 text-white">
+    <nav className="flex sticky top-0 z-30 items-center justify-between sm:justify-start sm:gap-4 p-4 bg-gray-900 text-white">
       <div className="flex gap-2 sm:mx-5  items-center">
         <Image alt="brand-icon" src="/icons/brand_icon.png" width={32} height={32} />
         <div className="text-xl font-pacifico"><Link href="/">FinTrack</Link></div>
@@ -33,9 +33,12 @@ export function Navbar() {
 
       {isOpen && (
         <div className="absolute top-14 right-4 bg-gray-800 text-white p-4 rounded-md shadow-md flex flex-col space-y-2 sm:hidden">
-          <Link href="/user/dashboard" className="hover:bg-gray-700 p-2 rounded">Dashboard</Link>
-          <Link href="/user/transactions" className="hover:bg-gray-700 p-2 rounded">Transactions</Link>
-          <Link href="/user/budget" className="hover:bg-gray-700 p-2 rounded">Budget</Link>
+          <Link href="/user/dashboard" className={`hover:bg-gray-700 p-2 rounded ${isActive("/user/dashboard") ? "bg-gray-700 cursor-not-allowed text-white" : ""
+          }`} onClick={() => setIsOpen(false)}>Dashboard</Link>
+          <Link href="/user/transactions" className={`hover:bg-gray-700 p-2 rounded ${isActive("/user/transactions") ? "bg-gray-700 cursor-not-allowed text-white" : ""
+          }`} onClick={() => setIsOpen(false)}>Transactions</Link>
+          <Link href="/user/budget" className={`hover:bg-gray-700 p-2 rounded ${isActive("/user/budget") ? "bg-gray-700 cursor-not-allowed text-white" : ""
+          }`} onClick={() => setIsOpen(false)}>Budget</Link>
         </div>
       )}
     </nav>
