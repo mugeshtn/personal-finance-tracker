@@ -82,7 +82,7 @@ const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
                 </div>
             )}
             {showBudgetForm && (
-                <div className="absolute left-32 lg:left-72 top-10  z-20 min-w-[300px]">
+                <div className="absolute left-20 lg:left-72 top-10  z-20 min-w-[300px]">
                     <AddBudget setShowBudgetForm={setShowBudgetForm} />
                 </div>
             )}
