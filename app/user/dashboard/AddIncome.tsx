@@ -114,7 +114,7 @@ const AddIncome = ({ setShowIncForm }: { setShowIncForm: Dispatch<SetStateAction
                     </CardContent>
                     <CardFooter className="flex justify-between">
                         <Button type="submit" className="bg-blue-600">Save</Button>
-                        <Button type="submit" className="bg-red-600">Close</Button>
+                        <Button type="submit" onClick={() => setShowIncForm(false)} className="bg-red-600">Close</Button>
                     </CardFooter>
                 </form>
             </Form>
