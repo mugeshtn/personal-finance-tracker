@@ -26,7 +26,7 @@ export default function RootLayout({
         <div className="w-full h-80 bg-blue-950 text-white">
           <ToastContainer />
           <Navbar />
-          <h1 className="text-4xl px-10 pt-10"> Welcome back, User !<i>👋🏻</i></h1>
+          <h1 className="text-4xl lg:text-4xl px-10 pt-10"> Welcome back, User !<i>👋🏻</i></h1>
           <h1 className="px-10 pt-2 pb-5 text-gray-400">Track Your Finances with Ease</h1>
           <TransactionsProvider>
             {children}

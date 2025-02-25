@@ -10,7 +10,7 @@ export default function Home() {
         <div className="absolute transform  md:-translate-x-1/6  -translate-y-24">
           <HomeCard />
         </div>
-        <div className="lg:p-10 md:mt-24 grid grid-cols-1 bg-[url('/images/bg_home.jpg')] w-full bg-cover bg-center text-black min-h-[80vh] xl:min-h-[100vh] ">
+        <div className="lg:p-10 mt-20 grid grid-cols-1 bg-[url('/images/bg_home.jpg')] w-full bg-cover bg-center text-black min-h-[80vh]">
           <div className="text-center grid-cols-">
             <h1 className=" mt-9 lg:mt-36 text-3xl md:text-5xl p-5 lg:px-52 md:px-28 font-pacifico leading-relaxed md:leading-normal">
               <span className="text_gradient">Fintrack</span> helps manage your budgets, <span className="text_gradient">Track</span>  youir expenses and<span className="text_gradient"> Visualises </span>spending !</h1>

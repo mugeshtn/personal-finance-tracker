@@ -57,7 +57,7 @@ const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
                         }
                     </CardHeader>
                     <CardContent className="relative">
-                        <h1 className="font-bold text-medium sm:text-xl">
+                        <h1 className="font-bold text-medium lg:text-lg">
                             ₹ {
                                 getCardValue(card.name, card.amount)
                             }
@@ -66,9 +66,9 @@ const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
                             (card.name === "Total Income" || card.name === "Total Budget") && (
                                 <div
                                     onClick={() => card.name === "Total Income" ? setShowIncForm(!showIncForm) : setShowBudgetForm(!showBudgetForm)}
-                                    className="absolute top-0 right-6 cursor-pointer"
+                                    className="absolute bottom-5 right-6 cursor-pointer"
                                 >
-                                    <PlusCircle className="bg-green-600 rounded-full text-white" size={35} />
+                                    <PlusCircle className="bg-green-600 rounded-full text-white" size={32} />
                                 </div>
                             )
                         }

@@ -79,8 +79,8 @@ const Transactions = () => {
 
     return (
         <>
-            <h1 className="white ml-10 text-lgtext-gray-400">Keep records of every transaction !</h1>
-            <div className="mt-14 flex w-full justify-center min-w-[80vw] text-black relative mb-32">
+            <h1 className="white ml-10 text-lg">Keep records of every transaction !</h1>
+            <div className="mt-6 flex w-full justify-center min-w-[80vw] text-black relative mb-32">
                 <div className=" bg-gray-100 rounded-3xl px-14 min-w-[80vw]">
                     <div className="flex justify-between py-6">
                         <div>
@@ -103,7 +103,7 @@ const Transactions = () => {
                         }`}>
                         <Addform setOpen={setIsOpen} setRefresh={setRefresh} />
                     </div>
-                    <Table className="max-w-[90vw] bg-gray-200 rounded-lg min-h-[60vh]">
+                    <Table className="max-w-[90vw] bg-gray-200 rounded-lg min-h-[60vh] lg:text-[12px] text-[11px]">
                         <TableCaption className="pb-5 text-xs">List of your recent transactions.</TableCaption>
                         <TableHeader>
                             <TableRow>
@@ -184,14 +184,14 @@ const Transactions = () => {
                                         <TableRow key={index}>
                                             <TableCell>
                                                 <p>{formatDateTime(tx.date)[0]}</p>
-                                                <small>{formatDateTime(tx.date)[1]}</small>
+                                                <small className="hidden lg:flex">{formatDateTime(tx.date)[1]}</small>
                                             </TableCell>
                                             <TableCell>{tx.notes || "---"}</TableCell>
                                             <TableCell>{tx.category}</TableCell>
                                             <TableCell>{tx.paymentMethod}</TableCell>
                                             <TableCell className="font-medium">₹ {tx.amount}</TableCell>
-                                            <TableCell><Button size="sm" onClick={() => editingData(tx)} className="bg-blue-600"><Pencil /></Button></TableCell>
-                                            <TableCell><Button size="sm" onClick={() => handleDelete(tx._id, setRefresh)} className="bg-red-600"><Trash2Icon /></Button></TableCell>
+                                            <TableCell><Button onClick={() => editingData(tx)} className="bg-blue-600" size="sm"><Pencil/></Button></TableCell>
+                                            <TableCell><Button  onClick={() => handleDelete(tx._id, setRefresh)} className="bg-red-600" size="sm"><Trash2Icon /></Button></TableCell>
                                         </TableRow>
 
                                     ))}

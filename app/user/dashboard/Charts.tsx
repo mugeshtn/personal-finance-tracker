@@ -27,11 +27,11 @@ export const DailyBarChart = () => {
     return acc;
   }, []);
   return (
-    <div className="w-full  px-5 py-5 bg-gray-100 rounded-2xl shadow-2xl ">
+    <div className="w-full px-5 py-5 bg-gray-100 rounded-2xl shadow-2xl ">
       <h1 className="text-xl font-semibold mb-4 ml-8">Monthly Transaction</h1>
       {
         transactions.length > 0 ? (
-          <ResponsiveContainer width="100%" height={300}>
+          <ResponsiveContainer width="100%" height={350}>
             <BarChart data={formattedData} margin={{ top: 30, right: 30, bottom: 20, left: 0 }} barCategoryGap={5}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="date" fontSize={10} />
@@ -41,7 +41,7 @@ export const DailyBarChart = () => {
             </BarChart>
           </ResponsiveContainer>
         ) : (
-          <div>No Transaction data available!</div>
+          <div className="text-center text-gray-500 py-8">No Transaction data available!</div>
         )
       }
     </div>
@@ -56,10 +56,10 @@ const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28DFF", "#FF6384"
 export const CategoryPieChart = () => {
   const { category = [] } = useTransactions();
   return (
-    <div className="w-full md:w-[400px] md:ml-10 bg-gray-100 md:px-5 shadow-2xl rounded-xl p-4">
+    <div className="w-full md:w-[400px] md:ml-10 bg-gray-200 md:px-5 shadow-2xl rounded-xl py-5">
       <h1 className="text-xl font-semibold ml-8">Categories</h1>
       {category.length > 0 ? (
-        <ResponsiveContainer className="bg-gray-100 rounded-2xl py-8" width="100%" height={320}>
+        <ResponsiveContainer className="bg-gray-200 rounded-2xl" width="100%" height={320}>
           <PieChart>
             <Pie
               data={category}
@@ -70,6 +70,7 @@ export const CategoryPieChart = () => {
               innerRadius={70}
               outerRadius={90}
               fill="#8884d8"
+              fontSize={13}
               label
             >
               {category.map((_, index) => (
@@ -105,7 +106,7 @@ export const ComparisonBarChart = () => {
 
   return (
     <>
-      <div className="w-full md:w-[690px] px-5 py-5 bg-gray-100 rounded-2xl shadow-2xl p-4">
+      <div className="w-full md:w-[690px] px-5 py-5 bg-gray-100 rounded-2xl shadow-2xl">
         <h1 className="text-xl font-semibold ml-0 md:ml-10 pb-3 text-center md:text-left">Budget vs Actual Comparison</h1>
         {
           filteredBudgets.length > 0 ? (

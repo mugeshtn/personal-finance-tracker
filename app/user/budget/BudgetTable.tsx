@@ -47,7 +47,7 @@ const BudgetTable = () => {
       <div className="relative mb-52">
         <div className="w-full max-w-2xl text-black mx-auto p-4 bg-gray-300 rounded-2xl shadow-2xl">
           <h2 className="text-xl font-bold mb-4">Budget vs Actual Expenses</h2>
-          <Table>
+          <Table className="text-[12px] lg:text-[15px]">
             <TableHeader>
               <TableRow>
                 <TableHead>Category</TableHead>
