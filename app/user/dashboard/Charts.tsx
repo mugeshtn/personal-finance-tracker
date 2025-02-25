@@ -93,7 +93,7 @@ export const CategoryPieChart = () => {
 // BUDGET VS ACTUAL BAR CHART
 const customBarRender = (props: any, payload: any) => {
   const { x, y, width, height } = props;
-  const barColor = payload.category.total > payload.total ? "red" : "#82ca9d"; // Red if expenses > budget
+  const barColor = payload.category.total > payload.total ? "red" : "#82ca9d"; 
 
   return (
     <rect x={x} y={y} width={width} height={height} fill={barColor} />
@@ -102,7 +102,6 @@ const customBarRender = (props: any, payload: any) => {
 export const ComparisonBarChart = () => {
   const { filteredBudgets=[] } = useTransactions();
 
-  console.log(filteredBudgets)
 
   return (
     <>
