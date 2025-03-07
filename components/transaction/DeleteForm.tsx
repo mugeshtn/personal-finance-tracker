@@ -6,7 +6,7 @@ import { showToast } from "@/utils/showToast";
 
 
 const DeleteForm = ({ setShowDelForm }: { setShowDelForm: Dispatch<SetStateAction<boolean>> }) => {
-    const { income } = useTransactions()
+    const { income, getIncome } = useTransactions()
     const [amount, setAmount] = useState("")
     const [error, setError] = useState("")
 
@@ -35,6 +35,7 @@ const DeleteForm = ({ setShowDelForm }: { setShowDelForm: Dispatch<SetStateActio
                 headers: { "Content-Type": "application/json" },
             });
             showToast("Income updated successfully !", "success")
+            getIncome()
             setShowDelForm(false)
             setAmount("")
         } catch (error: any) {

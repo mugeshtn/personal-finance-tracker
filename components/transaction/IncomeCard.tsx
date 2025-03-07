@@ -22,8 +22,7 @@ const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
 
     useEffect(() => {
         getIncome()
-        
-    }, [showIncForm, showDelForm])
+    }, [showIncForm])
 
     useEffect(() => {
         getBudget()
