@@ -1,27 +1,33 @@
-import { LucidePiggyBank, TrendingDown, PlusCircle, Wallet } from "lucide-react";
+import { LucidePiggyBank, TrendingDown, PlusCircle, Wallet, MinusCircle } from "lucide-react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useTransactions } from "@/context/context";
 import { TCardFeatures } from "@/utils/types";
 import AddIncome from "@/app/user/dashboard/AddIncome";
 import { useEffect, useState } from "react";
 import AddBudget from "@/app/user/budget/AddBudget";
+import DeleteForm from "./DeleteForm";
 
 const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
     const { totalExpense, income, balance, getIncome, budgetAmt, getBudget, filteredBudgets = [] } = useTransactions();
 
     const [showIncForm, setShowIncForm] = useState(false);
+    const [showDelForm, setShowDelForm] = useState(false);
     const [showBudgetForm, setShowBudgetForm] = useState(false);
 
     const spendAmt = filteredBudgets.reduce((sum, val) => {
-       return sum + val.category.total;
+        return sum + val.category.total;
     }, 0)
 
     const savingsAmt = budgetAmt - spendAmt;
 
     useEffect(() => {
         getIncome()
+        
+    }, [showIncForm, showDelForm])
+
+    useEffect(() => {
         getBudget()
-    }, [showIncForm, showBudgetForm])
+    }, [showBudgetForm])
 
     const getCardValue = (name: string, amount: string) => {
         switch (name) {
@@ -63,14 +69,36 @@ const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
                             }
                         </h1>
                         {
-                            (card.name === "Total Income" || card.name === "Total Budget") && (
+                            (card.name === "Total Income") ? (
+                                <>
+                                    <div
+                                        onClick={() => {
+                                            setShowIncForm(!showIncForm)
+                                            setShowDelForm(false)
+                                        }}
+                                        className="absolute top-0 right-16"
+                                    >
+                                        <PlusCircle className="bg-green-600 rounded-full text-white" size={32} />
+                                    </div>
+                                    <div
+                                        onClick={() => {
+                                            setShowDelForm(!showDelForm)
+                                            setShowIncForm(false)
+                                        }}
+                                        className="absolute right-4 top-0"
+                                    >
+                                        <MinusCircle className="bg-red-600 rounded-full text-white" size={32} />
+                                    </div>
+                                </>
+                            ) : (card.name === "Total Budget") ? (
                                 <div
-                                    onClick={() => card.name === "Total Income" ? setShowIncForm(!showIncForm) : setShowBudgetForm(!showBudgetForm)}
+                                    onClick={() => setShowBudgetForm(!showBudgetForm)}
                                     className="absolute bottom-5 right-6 cursor-pointer"
                                 >
                                     <PlusCircle className="bg-green-600 rounded-full text-white" size={32} />
                                 </div>
-                            )
+                            ) : null
+
                         }
                     </CardContent>
                 </Card>
@@ -86,6 +114,14 @@ const IncomeCard = ({ cardFeatures }: { cardFeatures: TCardFeatures[] }) => {
                     <AddBudget setShowBudgetForm={setShowBudgetForm} />
                 </div>
             )}
+
+            {
+                showDelForm && (
+                    <div className="absolute left-20 sm:left-52 md:left-64 lg:left-72 sm:top-10 z-10 min-w-[200px]">
+                        <DeleteForm setShowDelForm={setShowDelForm} />
+                    </div>
+                )
+            }
         </>
     );
 };

@@ -31,3 +31,40 @@ export async function POST(req: Request) {
         return NextResponse.json({ message: "Income API error" })
     }
 }
+
+
+export async function PUT(req: Request) {
+    try {
+        await connectDB();
+    const body = await req.json();
+    let amountToReduce = Number(body)
+
+    if (isNaN(amountToReduce) || amountToReduce <= 0) {
+        return NextResponse.json({ message: "Invalid amount" }, { status: 400 });
+    }
+
+    const incomes = await IncomeModel.find().sort({ amount: -1 })
+
+    if (!incomes.length) {
+        return NextResponse.json({ message: "No incomes available" }, { status: 404 });
+    }
+
+    for (const income of incomes) {
+        if (amountToReduce <= 0) break;
+
+        if (income.amount <= amountToReduce) {
+            amountToReduce -= income.amount;
+            await IncomeModel.findByIdAndDelete(income._id);
+        } else {
+            income.amount -= amountToReduce;
+            amountToReduce = 0;
+            await income.save()
+        }
+    }
+
+    return NextResponse.json("Income updated successfully", { status: 201 });
+    } catch (error: any) {
+        console.error("Income API Error", error.message)
+        return NextResponse.json({ message: "Income API error" })
+    }
+}
