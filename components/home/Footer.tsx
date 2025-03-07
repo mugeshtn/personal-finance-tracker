@@ -27,7 +27,7 @@ export default function Footer() {
             </div>
 
             <div className="pb-4 text-center text-gray-500 text-sm">
-                &copy; 2025 Fintrack. All rights reserved.
+                &copy; 2025 Fintrack by Mugesh TN; All rights reserved.
             </div>
         </footer>
     );
